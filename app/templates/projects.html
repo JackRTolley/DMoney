@@ -40,7 +40,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href=investments>
+                <a class="nav-link" href="investments">
                     <i class="fas fa-comment-dollar"> Investments</i>
                 </a>
               </li>
@@ -49,16 +49,18 @@
         </nav>
 
         <!--Main content-->
+
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
-            </div>
-            <div class="card-group">
-            {% for project in projects %}
-                <div class="project" data-name='{{project.name}}' data-score='{{project.score}}'></div>
-            {% endfor %}
-            </div>
-        </div>
+                <div class="row">
+                        <div class="col-md-4">
+                            <h1>Projects</h1>
+                        </div>
+                    </div>
+            <ul class="list-group list-group-flush">
+                {% for project in projects%}
+                <li class="list-group-item">{{project.name}}</li>
+                {% endfor%}
+            </ul>
         </main>
 
       </div>

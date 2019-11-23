@@ -23,7 +23,21 @@ def account():
    }
    return render_template('account.html', title='My Account', transactions=transactions, data=data)
 
+@app.route('/projects')
+def projects():
+   projects = [
+      {'name': 'Help Cats', 'score': 50},
+      {'name': 'Help Dogs', 'score': 50}
+   ]
+   return render_template('projects.html', title='My Projects', projects=projects)
 
+@app.route('/investments')
+def project():
+   projects = [
+      {'name': 'Help Frogs', 'score': 50},
+      {'name': 'Help Frongs', 'score': 50}
+   ]
+   return render_template('projects.html', title='My Projects', projects=projects)
 
 if __name__ == '__main__':
     app.run(debug = True)
