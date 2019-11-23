@@ -14,9 +14,21 @@ DB_URL = 'sqlite:///database.db'
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+app.config['SECRET_KEY'] = 'secret-key'
 db = SQLAlchemy(app)
 
 # Create our database model
+<<<<<<< HEAD:projects.py
+=======
+class Project(db.Model):
+    __tablename__ = "projects"
+    id = db.Column(db.Integer, primary_key=True)
+    creator_id = db.Column(db.Integer, unique=True)
+    title = db.Column(db.String(120), unique=True)
+    description = db.Column(db.String(1000), unique = True)
+    score = db.Column(db.Integer)
+    total_funding = db.Column(db.Float, unique=False)
+>>>>>>> 03668d3858d857a2eefac88b8d38ac1c80327b57:app/models.py
 
 class User(db.Model):
     __tablename__="users"
@@ -95,6 +107,7 @@ def add_data():
     session.add(project5)
     session.commit()
 
+<<<<<<< HEAD:projects.py
 def get_projects_by_score():
     engine = create_engine(DB_URL, echo=True)
     Session = sessionmaker(bind=engine)
@@ -109,14 +122,20 @@ def get_projects_by_score():
         dict = {'id':id, 'name':name, 'score':score, creator:'creator'}
         list.append(dict)
     print(list)
+=======
+
+
+>>>>>>> 03668d3858d857a2eefac88b8d38ac1c80327b57:app/models.py
 
 if __name__ == "__main__":
     engine = create_engine(DB_URL, echo=True)
     Session = sessionmaker(bind=engine)
     session = Session()
+<<<<<<< HEAD:projects.py
     user_list = session.query(user).first()
     print(user_list.name)
+=======
+    user_list = session.query(User).first()
+>>>>>>> 03668d3858d857a2eefac88b8d38ac1c80327b57:app/models.py
 
-    ordered_list = session.query(Project).order_by(Project.score)
-    print(ordered_list.all())
     get_projects_by_score()
