@@ -1,7 +1,7 @@
+import sqlite3
+import psycopg2
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-import psycopg2
-import sqlite3
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -49,8 +49,6 @@ def count():
 
 def colunm_names():
     print()
-
-
 
 @app.cli.command('resetdb')
 def resetdb_command():
