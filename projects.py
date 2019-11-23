@@ -20,6 +20,7 @@ db = SQLAlchemy(app)
 class Project(db.Model):
     __tablename__ = "projects"
     id = db.Column(db.Integer, primary_key=True)
+    creator_id = db.Column(db.Integer, unique=True)
     title = db.Column(db.String(120), unique=True)
     score = db.Column(db.Integer)
     total_funding = db.Column(db.Float, unique=False)
@@ -68,6 +69,21 @@ def resetdb_command():
 
 #resetdb_command()
 
+def get_projects_by_score():
+    engine = create_engine(DB_URL, echo=True)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    ordered_list = session.query(Project).order_by(Project.score)
+    list = []
+    for project in ordered_list:
+        id = project.id
+        name = project.title
+        score = project.score
+        creator = project.creator_id
+        dict = {'id':id, 'name':name, 'score':score, creator:'creator'}
+        list.append(dict)
+    print(list)
+
 
 
 
@@ -105,3 +121,4 @@ if __name__ == "__main__":
 
     ordered_list = session.query(Project).order_by(Project.score)
     print(ordered_list.all())
+    get_projects_by_score()
