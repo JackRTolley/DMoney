@@ -17,13 +17,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 db = SQLAlchemy(app)
 
 # Create our database model
-class Project(db.Model):
-    __tablename__ = "projects"
-    id = db.Column(db.Integer, primary_key=True)
-    creator_id = db.Column(db.Integer, unique=True)
-    title = db.Column(db.String(120), unique=True)
-    score = db.Column(db.Integer)
-    total_funding = db.Column(db.Float, unique=False)
 
 class User(db.Model):
     __tablename__="users"
@@ -33,17 +26,23 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     location = db.Column(db.String(255),unique=False, nullable=False)
     credit = db.Column(db.Float, unique=False)
-
+    projects = db.relationship('Project',backref='users',lazy=True)
+    transactions = db.relationship('Transaction',backref='users',lazy=True)
+class Project(db.Model):
+    __tablename__ = "projects"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120), unique=True)
+    score = db.Column(db.Integer)
+    total_funding = db.Column(db.Float, unique=False)
+    creator_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
+    transactions = db.relationship('Transaction',backref='projects',lazy=True)
 class Transaction(db.Model):
     __tablename__="transactions"
     id = db.Column(db.Integer, primary_key=True)
-    user_key = db.Column(db.Integer, unique=True)
-    project_key = db.Column(db.Integer, unique=True)
     value = db.Column(db.Float, unique=False)
     #rate = db.Column(db.Float)
-
-
-
+    user_key = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
+    project_key = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable = False)
 
 def count():
     print("Total number of projects is", Project.query.count())
@@ -51,7 +50,7 @@ def count():
 def colunm_names():
     print()
 
-@app.cli.command('resetdb')
+app.cli.command('resetdb')
 def resetdb_command():
     """Destroys and creates the database + tables."""
 
@@ -67,23 +66,7 @@ def resetdb_command():
     db.create_all()
     print('Shiny!')
 
-#resetdb_command()
-
-def get_projects_by_score():
-    engine = create_engine(DB_URL, echo=True)
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    ordered_list = session.query(Project).order_by(Project.score)
-    list = []
-    for project in ordered_list:
-        id = project.id
-        name = project.title
-        score = project.score
-        creator = project.creator_id
-        dict = {'id':id, 'name':name, 'score':score, creator:'creator'}
-        list.append(dict)
-    print(list)
-
+resetdb_command()
 
 
 
@@ -112,12 +95,27 @@ def add_data():
     session.add(project5)
     session.commit()
 
+def get_projects_by_score():
+    engine = create_engine(DB_URL, echo=True)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    ordered_list = session.query(Project).order_by(Project.score)
+    list = []
+    for project in ordered_list:
+        id = project.id
+        name = project.title
+        score = project.score
+        creator = project.creator_id
+        dict = {'id':id, 'name':name, 'score':score, creator:'creator'}
+        list.append(dict)
+    print(list)
+
 if __name__ == "__main__":
     engine = create_engine(DB_URL, echo=True)
     Session = sessionmaker(bind=engine)
     session = Session()
-    user_list = session.query(User).first()
-    print(user_list.email)
+    user_list = session.query(user).first()
+    print(user_list.name)
 
     ordered_list = session.query(Project).order_by(Project.score)
     print(ordered_list.all())
