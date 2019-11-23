@@ -5,6 +5,7 @@ import sqlite3
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+
 DB_URL = 'sqlite:///database.db'
 
 
@@ -23,12 +24,22 @@ class Project(db.Model):
     score = db.Column(db.Integer)
 
 
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False,nullable=False)
+    display_name = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    location = db.Column(db.String(255),unique=False, nullable=False)
+
+
+
 
 
 def count():
     print("Total number of projects is", Project.query.count())
 
-def colum_names():
+def colunm_names():
     print()
 
 
@@ -62,9 +73,16 @@ project3 = Project(id = 3, title="Mental Health Care", score = 5)
 project4 = Project(id = 4, title="Durham Litter Picking", score=0)
 project5 = Project(id = 5, title="Park Management", score=6)
 
-ordered_list = session.query(Project).filter_by(Project.score).all()
 
-print(ordered_list)
+user1 = User(id =1, name="jwpetley", display_name="James Petley", email="jwpetley@gmail.com", location="Durham")
+#session.add(user1)
+#session.commit()
+user_list = session.query(User).first()
+print(user_list.email)
+
+ordered_list = session.query(Project).order_by(Project.score)
+print(ordered_list.all())
+
 
 '''session.add(project1)
 session.add(project2)
