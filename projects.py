@@ -1,18 +1,15 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+import psycopg2
+import sqlite3
 
-POSTGRES_URL="127.0.0.1:5432"
-POSTGRES_USER="dmoney"
-POSTGRES_PW="password"
-POSTGRES_DB="test"
 
-DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,
-        pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
+conn = sqlite3.connect('database.db')
 
+DB_URL = 'sqlite:///database.sqlite3'
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
-app.config.from_object(Config)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 db = SQLAlchemy(app)
 
 # Create our database model
