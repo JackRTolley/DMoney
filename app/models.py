@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 DB_URL = 'sqlite:///database.db'
 
@@ -11,22 +12,12 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SECRET_KEY'] = 'secret-key'
-db = SQLAlchemy(app)
+
 
 # Create our database model
-
-class Project(db.Model):
-    __tablename__ = "projects"
-    id = db.Column(db.Integer, primary_key=True)
-    creator_id = db.Column(db.Integer, unique=True)
-    #creator_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
-    title = db.Column(db.String(120), unique=True)
-    description = db.Column(db.String(1000), unique = True)
-    score = db.Column(db.Integer)
-    total_funding = db.Column(db.Float, unique=False)
-    #transactions = db.relationship('Transaction',backref='projects',lazy=True)
-
-class User(db.Model):
+db = SQLAlchemy(app)
+Base = declarative_base()
+class User(Base):
     __tablename__="users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False,nullable=False)
@@ -37,16 +28,17 @@ class User(db.Model):
     projects = db.relationship('Project',backref='users',lazy=True)
     transactions = db.relationship('Transaction',backref='users',lazy=True)
 
-class Project(db.Model):
+class Project(Base):
     __tablename__ = "projects"
     id = db.Column(db.Integer, primary_key=True)
+    creator_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
     title = db.Column(db.String(120), unique=True)
+    description = db.Column(db.String(1000), unique = True)
     score = db.Column(db.Integer)
     total_funding = db.Column(db.Float, unique=False)
-    creator_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
     transactions = db.relationship('Transaction',backref='projects',lazy=True)
 
-class Transaction(db.Model):
+class Transaction(Base):
     __tablename__="transactions"
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Float, unique=False)
@@ -54,6 +46,19 @@ class Transaction(db.Model):
     user_key = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
     project_key = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable = False)
 
+def create_database_and_session(Base):
+
+    engine = create_engine(DB_URL, echo=True)
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    return session
+
+def populate_db(session):
+
+    user_1 = User(id=1, )
+    
 def count():
     print("Total number of projects is", Project.query.count())
 
@@ -76,8 +81,6 @@ def resetdb_command():
     db.create_all()
     print('Shiny!')
 
-
-
 @app.cli.command('add_sample_data')
 def add_data():
     engine = create_engine(DB_URL, echo=True)
@@ -86,14 +89,12 @@ def add_data():
 
     session.add(user1)
 
-
     session.add(project1)
     session.add(project2)
     session.add(project3)
     session.add(project4)
     session.add(project5)
     session.commit()
-
 
 def get_projects_by_score():
     engine = create_engine(DB_URL, echo=True)
@@ -110,28 +111,38 @@ def get_projects_by_score():
         list.append(dict)
     print(list)
 
-
 if __name__ == "__main__":
+    
+    session = create_database_and_session(Base)
+
+    
+
+    
+    '''
+    print("Print")
+    
     engine = create_engine(DB_URL, echo=True)
+    #resetdb_command()
     Session = sessionmaker(bind=engine)
     session = Session()
-    user_list = session.query(user).first()
-    print(user_list.name)
 
-    user_list = session.query(User).first()
+    user1 = User(id =1, name="jwpetley", display_name="James Petley", email="jwpetley@gmail.com", location="Durham", credit=100)
+    session.add(user1)
+    session.commit()
 
+    user_list = session.query(users)
+    print(user_list)
+    print("done")
+
+    user_list = session.query(users).first()
 
     get_projects_by_score()
 
-    resetdb_command()
+    project1 = Project(id = 1, title="Building a Road", score = 3, total_funding=100)
+    project2 = Project(id = 2, title="Local Mentoring", score = 10, total_funding=100)
+    project3 = Project(id = 3, title="Mental Health Care", score = 5, total_funding=100)
+    project4 = Project(id = 4, title="Durham Litter Picking", score=0, total_funding=100)
+    project5 = Project(id = 5, title="Park Management", score=6, total_funding=100)
+    '''
 
-
-
-project1 = Project(id = 1, title="Building a Road", score = 3, total_funding=100)
-project2 = Project(id = 2, title="Local Mentoring", score = 10, total_funding=100)
-project3 = Project(id = 3, title="Mental Health Care", score = 5, total_funding=100)
-project4 = Project(id = 4, title="Durham Litter Picking", score=0, total_funding=100)
-project5 = Project(id = 5, title="Park Management", score=6, total_funding=100)
-
-
-user1 = User(id =1, name="jwpetley", display_name="James Petley", email="jwpetley@gmail.com", location="Durham", credit=100)
+    
