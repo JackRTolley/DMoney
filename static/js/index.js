@@ -93,8 +93,8 @@ var ProjectView = function (_React$Component4) {
         value: function render() {
             return React.createElement(
                 "div",
-                null,
-                "This is the project view"
+                { "class": "list-group list-group-flush" },
+                this.props.children
             );
         }
     }]);
@@ -116,42 +116,38 @@ var Project = function (_React$Component5) {
         value: function render() {
             return React.createElement(
                 "div",
-                { className: "row" },
+                { className: "card" },
                 React.createElement(
                     "div",
-                    { className: "col-2" },
+                    { className: "card-body" },
                     React.createElement(
-                        "button",
-                        null,
-                        "Upvote"
-                    ),
-                    React.createElement(
-                        "p",
-                        null,
-                        this.props.score
-                    ),
-                    React.createElement(
-                        "button",
-                        null,
-                        "Downvote"
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "col-8" },
-                    React.createElement(
-                        "p",
-                        null,
+                        "h5",
+                        { className: "card-title" },
                         this.props.name
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "col-2" },
+                    ),
                     React.createElement(
                         "p",
-                        null,
-                        "Money Bags"
+                        { className: "card-text" },
+                        "Default card text"
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "row" },
+                        React.createElement(
+                            "button",
+                            { className: "btn btn-secondary" },
+                            React.createElement("i", { className: "fas fa-angle-double-up fa-lg" })
+                        ),
+                        React.createElement(
+                            "button",
+                            { className: "btn btn-primary" },
+                            "More Info"
+                        ),
+                        React.createElement(
+                            "button",
+                            { className: "btn btn-secondary" },
+                            React.createElement("i", { className: "fas fa-chevron-down" })
+                        )
                     )
                 )
             );
@@ -178,18 +174,33 @@ var UserView = function (_React$Component6) {
                 { className: "col" },
                 React.createElement(
                     "div",
-                    { className: "row" },
-                    "User Account"
+                    { className: "col" },
+                    React.createElement("i", { "class": "fas fa-wallet fa-7x" }),
+                    React.createElement(
+                        "p",
+                        null,
+                        "My Account"
+                    )
                 ),
                 React.createElement(
                     "div",
-                    { className: "row" },
-                    "My Projects"
+                    { className: "col" },
+                    React.createElement("i", { "class": "fas fa-hammer fa-7x" }),
+                    React.createElement(
+                        "p",
+                        null,
+                        "My Projects"
+                    )
                 ),
                 React.createElement(
                     "div",
-                    { className: "row" },
-                    "My Investments"
+                    { className: "col" },
+                    React.createElement("i", { "class": "fas fa-comment-dollar fa-7x" }),
+                    React.createElement(
+                        "p",
+                        null,
+                        "My Investments"
+                    )
                 )
             );
         }
@@ -201,10 +212,25 @@ var UserView = function (_React$Component6) {
 document.querySelectorAll('.project').forEach(function (domContainer) {
     // Read the comment ID from a data-* attribute.
     var commentID = parseInt(domContainer.dataset.commentid, 10);
-
+    console.log(domContainer);
     ReactDOM.render(React.createElement(Project, domContainer.dataset), domContainer);
 });
 
-ReactDOM.render(React.createElement(UserView, null), document.querySelector('#userView'));
+/*
+ReactDOM.render(
+    <UserView />,
+    document.querySelector('#userView')
+);
+/*
+/*
 
-ReactDOM.render(React.createElement(Header, null), document.querySelector('#header'));
+ReactDOM.render(
+    <Header />,
+    document.querySelector('#header')
+);
+
+ReactDOM.render(
+    <ProjectView />,
+    document.querySelector('#projectView')
+)
+*/

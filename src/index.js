@@ -36,8 +36,8 @@ class Sidebar extends React.Component{
 class ProjectView extends React.Component{
     render(){
         return (
-        <div>
-            This is the project view
+        <div class="list-group list-group-flush">
+            {this.props.children}
         </div>
         )
     }
@@ -46,17 +46,23 @@ class ProjectView extends React.Component{
 class Project extends React.Component{
     render(){
         return (
-            <div className="row">
-                <div className="col-2">
-                    <button>Upvote</button>
-                    <p>{this.props.score}</p>
-                    <button>Downvote</button>
-                </div>
-                <div className="col-8">
-                    <p>{this.props.name}</p>
-                </div>
-                <div className="col-2">
-                    <p>Money Bags</p>
+            <div className="card">
+                <div className="card-body">
+                    <h5 className="card-title">{this.props.name}</h5>
+                    <p className="card-text">Default card text</p>
+                    <div className="row">
+                    
+                    <button className="btn btn-secondary">
+                    <i className="fas fa-angle-double-up fa-lg"></i>
+                    </button>
+                    
+                    <button className="btn btn-primary">More Info</button>
+                    
+                    <button className="btn btn-secondary">
+                    <i className="fas fa-chevron-down"></i>
+                    </button>
+                    
+                    </div>
                 </div>
             </div>
         )
@@ -67,36 +73,47 @@ class UserView extends React.Component{
     render(){
         return (
             <div className="col">
-                <div className="row">
-                    User Account
+                <div className="col">
+                    <i class="fas fa-wallet fa-7x"></i>
+                    <p>My Account</p>
                 </div>
-                <div className="row">
-                    My Projects
+                <div className="col">
+                    <i class="fas fa-hammer fa-7x"></i>
+                    <p>My Projects</p>
                 </div>
-                <div className="row">
-                    My Investments 
+                <div className="col">
+                    <i class="fas fa-comment-dollar fa-7x"></i>
+                    <p>My Investments</p>
                 </div>
             </div>
         )
     }
 }
-
 document.querySelectorAll('.project')
   .forEach(domContainer => {
     // Read the comment ID from a data-* attribute.
     const commentID = parseInt(domContainer.dataset.commentid, 10);
-
+    console.log(domContainer);
     ReactDOM.render(   <Project {...(domContainer.dataset)}/>,
     domContainer
     );
 });
 
+/*
 ReactDOM.render(
     <UserView />,
     document.querySelector('#userView')
 );
+/*
+/*
 
 ReactDOM.render(
     <Header />,
     document.querySelector('#header')
 );
+
+ReactDOM.render(
+    <ProjectView />,
+    document.querySelector('#projectView')
+)
+*/

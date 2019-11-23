@@ -6,22 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
+    <script src="https://kit.fontawesome.com/5923e01dd0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="static/css/base.css">
+</head>
   <body>
 
+    <!-- NavBar -->
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Local Mr. Money Bags</a>
+            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    </nav>
 
-    <div id="header" class="container-fluid">This is my header</div>
-
+    <!-- Content -->
     <div class="container-fluid">
-        <div class="row">
-        <div id="userView" class="col-2">This is my user view</div>
-        <div id="projectView" class="col-10">
-            {% for project in projects%}
-            <div class="project row card" data-name='{{project.name}}' data-score='{{project.score}}'></div>
+    <div class="row">
+        <!-- Side Bar-->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div>
+            <ul class="nav flex-column ">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-home">Home</i>
+                    </a>
+                </li>
+              <li class="nav-item">
+                <a class="nav-link" href="account">
+                    <i class="fas fa-wallet">Account</i>
+                </a>
+              </li>
+              <li class="nav-item" href="projects">
+                <a class="nav-link">
+                    <i class="fas fa-hammer">Projects</i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fas fa-comment-dollar"> Investments</i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <!--Main content-->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+            </div>
+            <div class="card-group">
+            {% for project in projects %}
+                <div class="project" data-name='{{project.name}}' data-score='{{project.score}}'></div>
             {% endfor %}
+            </div>
         </div>
+        </main>
+
+      </div>
     </div>
-    </div>
+   
 
     <!-- dependencies scripts -->
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
@@ -31,6 +73,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- My Script-->
     <script src="static/js/index.js"></script>
-    </script>
+
   </body>
 </html>
