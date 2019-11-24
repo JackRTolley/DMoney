@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/JackRTolley/DMoney/issues"
   },
-  "homepage": "https://github.com/JackRTolley/DMoney#readme"
+  "homepage": "https://github.com/JackRTolley/DMoney#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
 }

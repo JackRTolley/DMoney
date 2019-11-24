@@ -1,5 +1,5 @@
 {
     "git.ignoreLimitWarning": true,
     "python.linting.enabled": false,
-    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe"
+    "python.pythonPath": "/home/jack/anaconda3/bin/python"
 }
