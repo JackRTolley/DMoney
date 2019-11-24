@@ -9,10 +9,7 @@ from app import app, db
 @app.route('/')
 @app.route('/index')
 def hello_world():
-   projects = [
-      {'name': 'Help Cats', 'score': 50},
-      {'name': 'Help Dogs', 'score': 50}
-   ]
+   projects = get_projects_by_score()
    return render_template('index.html', title='Home', projects=projects)
 
 @app.route('/account')
@@ -30,10 +27,6 @@ def account():
 
 @app.route('/projects')
 def projects():
-   projects = [
-      {'name': 'Help Cats', 'score': 50},
-      {'name': 'Help Dogs', 'score': 50}
-   ]
    projects = get_projects_by_score()
    return render_template('projects.html', title='My Projects', projects=projects)
 

@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 import psycopg2
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
@@ -27,6 +28,7 @@ class User(db.Model):
     display_name = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     location = db.Column(db.String(255),unique=False, nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     credit = db.Column(db.Float, unique=False)
     projects = db.relationship('Project',backref='users',lazy=True)
     transactions = db.relationship('Transaction',backref='users',lazy=True)
