@@ -1,21 +1,49 @@
-from flask import render_template, flash, redirect, url_for
+from flask import Flask,render_template
+from app.models import get_projects_by_score
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from app import app, db
-from app.forms import ProjectForm
-from app.models import Project
+
+
 
 @app.route('/')
 @app.route('/index')
-def index():
-    return render_template('base.html', title='Home')
+def hello_world():
+   projects = [
+      {'name': 'Help Cats', 'score': 50},
+      {'name': 'Help Dogs', 'score': 50}
+   ]
+   return render_template('index.html', title='Home', projects=projects)
 
-@app.route('/project', methods=['GET', 'POST'])
+@app.route('/account')
+def account():
+   transactions = [
+      {'name': 'Help Cats', 'invested': 50, 'funded': 0.8, 'return': 0},
+      {'name': 'Help Dogs', 'invested': 20, 'funded': 1, 'return': 2}
+   ]
+   data = {
+      'investments': 100,
+      'donations': 200,
+      'returns': 10
+   }
+   return render_template('account.html', title='My Account', transactions=transactions, data=data)
+
+@app.route('/projects')
 def projects():
-    form = ProjectForm()
-    if form.validate_on_submit():
-        project = Project(title=form.name.data, description=form.description.data, creator_id=1, score=10, total_funding=100)
-        db.session.add(project)
-        db.session.commit()
-        flash('Project creation for project {}'.format(
-            form.name.data))
-        return redirect(url_for('index'))
-    return render_template('form.html', title='Project Creator', form=form)
+   projects = [
+      {'name': 'Help Cats', 'score': 50},
+      {'name': 'Help Dogs', 'score': 50}
+   ]
+   projects = get_projects_by_score()
+   return render_template('projects.html', title='My Projects', projects=projects)
+
+@app.route('/investments')
+def project():
+   projects = [
+      {'name': 'Help Frogs', 'score': 50},
+      {'name': 'Help Frongs', 'score': 50}
+   ]
+   return render_template('projects.html', title='My Projects', projects=projects)
+
+if __name__ == '__main__':
+    app.run(debug = True)

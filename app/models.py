@@ -129,10 +129,7 @@ def add_data():
     session.commit()
 
 def get_projects_by_score():
-    engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), echo=True)
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    ordered_list = session.query(Project).order_by(Project.score)
+    ordered_list = db.session.query(Project).order_by(Project.score)
     list = []
     for project in ordered_list:
         id = project.id
