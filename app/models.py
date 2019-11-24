@@ -138,7 +138,8 @@ def get_projects_by_score():
         name = project.title
         score = project.score
         creator = project.creator_id
-        dict = {'id':id, 'name':name, 'score':score, creator:'creator'}
+        descrit = project.description
+        dict = {'id':id, 'name':name, 'score':score, 'creator':creator, 'description': descrit}
         list.append(dict)
     return(list)
 

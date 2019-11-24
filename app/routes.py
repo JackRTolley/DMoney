@@ -8,6 +8,7 @@ from app import app, db
 @app.route('/index')
 def hello_world():
    projects = get_projects_by_score()
+   print(projects)
    return render_template('index.html', title='Home', projects=projects)
 
 @app.route('/account')

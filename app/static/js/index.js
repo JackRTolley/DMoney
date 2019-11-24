@@ -186,7 +186,7 @@ var Project = function (_React$Component5) {
                     React.createElement(
                         'p',
                         { className: 'card-text' },
-                        'Default card text'
+                        this.props.description
                     ),
                     React.createElement(
                         'div',

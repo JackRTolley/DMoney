@@ -98,7 +98,7 @@ class Project extends React.Component{
             <div className="card">
                 <div className="card-body">
                     <h5 className="card-title">{this.props.name}</h5>
-                    <p className="card-text">Default card text</p>
+                    <p className="card-text">{this.props.description}</p>
                     <div className="row">
                     
                     <button className="btn btn-secondary" onClick={this.upvote}>
