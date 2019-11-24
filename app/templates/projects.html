@@ -55,8 +55,27 @@
                     <div class="col-md-4">
                         <h1>Projects</h1>
                     </div>
+            </div>
+            <div class='row'>
+              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#projectform" aria-expanded="false" aria-controls="collapseExample">
+                Create New Project
+              </button>
+            </div>
+            <div class='collapse' id='projectform'>
+              <form action="" method="POST" novalidate>
+                <div class="form-group">
+                  <label for="title">Project Title</label>
+                  <input type='text' class="form-control" name='title' placeholder="Enter Project Title">
                 </div>
-            <ul class="list-group list-group-flush">
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <input type='text' class='form-control' name='description' placeholder="Enter Description">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+            
+            <ul class="list-group list-group-flush" style="padding: 10px 0px 0px">
                 {% for project in projects%}
                 <li class="list-group-item">{{project.name}}</li>
                 {% endfor%}
