@@ -18,10 +18,10 @@ var App = function (_React$Component) {
     }
 
     _createClass(App, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
                 React.createElement(Header, null),
                 React.createElement(Sidebar, null),
@@ -43,12 +43,12 @@ var Header = function (_React$Component2) {
     }
 
     _createClass(Header, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "header",
+                'header',
                 null,
-                "MR LOCAL MONEYBAGS"
+                'MR LOCAL MONEYBAGS'
             );
         }
     }]);
@@ -66,12 +66,12 @@ var Sidebar = function (_React$Component3) {
     }
 
     _createClass(Sidebar, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
-                "this is a side bar"
+                'this is a side bar'
             );
         }
     }]);
@@ -89,11 +89,11 @@ var ProjectView = function (_React$Component4) {
     }
 
     _createClass(ProjectView, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
-                { "class": "list-group list-group-flush" },
+                'div',
+                { 'class': 'list-group list-group-flush' },
                 this.props.children
             );
         }
@@ -105,48 +105,106 @@ var ProjectView = function (_React$Component4) {
 var Project = function (_React$Component5) {
     _inherits(Project, _React$Component5);
 
-    function Project() {
+    function Project(props) {
         _classCallCheck(this, Project);
 
-        return _possibleConstructorReturn(this, (Project.__proto__ || Object.getPrototypeOf(Project)).apply(this, arguments));
+        var _this5 = _possibleConstructorReturn(this, (Project.__proto__ || Object.getPrototypeOf(Project)).call(this, props));
+
+        _this5.state = {
+            isUpvoteToggleOn: false,
+            upvotecolor: '#FFFFFF',
+            isDownvoteToggleOn: false,
+            downvotecolor: '#FFFFFF'
+        };
+
+        // This binding is necessary to make `this` work in the callback
+        _this5.upvote = _this5.upvote.bind(_this5);
+        _this5.downvote = _this5.downvote.bind(_this5);
+        return _this5;
     }
 
     _createClass(Project, [{
-        key: "render",
+        key: 'upvote',
+        value: function upvote() {
+            console.log(this.state.isUpvoteToggleOn);
+            this.setState(function (state) {
+                return {
+                    isUpvoteToggleOn: !state.isUpvoteToggleOn
+                };
+            });
+            if (!this.state.isUpvoteToggleOn) {
+                this.setState(function (state) {
+                    return {
+                        upvotecolor: '#ffa500'
+                    };
+                });
+            } else {
+                this.setState(function (state) {
+                    return {
+                        upvotecolor: '#FFFFFF'
+                    };
+                });
+            }
+        }
+    }, {
+        key: 'downvote',
+        value: function downvote() {
+            console.log("hbs");
+            this.setState(function (state) {
+                return {
+                    isDownvoteToggleOn: !state.isDownvoteToggleOn
+                };
+            });
+            if (!this.state.isDownToggleOn) {
+                this.setState(function (state) {
+                    return {
+                        downvotecolor: '#0000FF'
+                    };
+                });
+            } else {
+                this.setState(function (state) {
+                    return {
+                        downvotecolor: '#FFFFFF'
+                    };
+                });
+            }
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
-                { className: "card" },
+                'div',
+                { className: 'card' },
                 React.createElement(
-                    "div",
-                    { className: "card-body" },
+                    'div',
+                    { className: 'card-body' },
                     React.createElement(
-                        "h5",
-                        { className: "card-title" },
+                        'h5',
+                        { className: 'card-title' },
                         this.props.name
                     ),
                     React.createElement(
-                        "p",
-                        { className: "card-text" },
-                        "Default card text"
+                        'p',
+                        { className: 'card-text' },
+                        'Default card text'
                     ),
                     React.createElement(
-                        "div",
-                        { className: "row" },
+                        'div',
+                        { className: 'row' },
                         React.createElement(
-                            "button",
-                            { className: "btn btn-secondary" },
-                            React.createElement("i", { className: "fas fa-angle-double-up fa-lg" })
+                            'button',
+                            { className: 'btn btn-secondary', onClick: this.upvote },
+                            React.createElement('i', { className: 'fas fa-angle-double-up fa-lg', style: { color: this.state.upvotecolor } })
                         ),
                         React.createElement(
-                            "button",
-                            { className: "btn btn-primary" },
-                            "More Info"
+                            'button',
+                            { className: 'btn btn-primary' },
+                            'More Info'
                         ),
                         React.createElement(
-                            "button",
-                            { className: "btn btn-secondary" },
-                            React.createElement("i", { className: "fas fa-chevron-down" })
+                            'button',
+                            { className: 'btn btn-secondary', onClick: this.downvote },
+                            React.createElement('i', { className: 'fas fa-chevron-down', style: { color: this.state.downvotecolor } })
                         )
                     )
                 )
@@ -167,39 +225,39 @@ var UserView = function (_React$Component6) {
     }
 
     _createClass(UserView, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
-                { className: "col" },
+                'div',
+                { className: 'col' },
                 React.createElement(
-                    "div",
-                    { className: "col" },
-                    React.createElement("i", { "class": "fas fa-wallet fa-7x" }),
+                    'div',
+                    { className: 'col' },
+                    React.createElement('i', { 'class': 'fas fa-wallet fa-7x' }),
                     React.createElement(
-                        "p",
+                        'p',
                         null,
-                        "My Account"
+                        'My Account'
                     )
                 ),
                 React.createElement(
-                    "div",
-                    { className: "col" },
-                    React.createElement("i", { "class": "fas fa-hammer fa-7x" }),
+                    'div',
+                    { className: 'col' },
+                    React.createElement('i', { 'class': 'fas fa-hammer fa-7x' }),
                     React.createElement(
-                        "p",
+                        'p',
                         null,
-                        "My Projects"
+                        'My Projects'
                     )
                 ),
                 React.createElement(
-                    "div",
-                    { className: "col" },
-                    React.createElement("i", { "class": "fas fa-comment-dollar fa-7x" }),
+                    'div',
+                    { className: 'col' },
+                    React.createElement('i', { 'class': 'fas fa-comment-dollar fa-7x' }),
                     React.createElement(
-                        "p",
+                        'p',
                         null,
-                        "My Investments"
+                        'My Investments'
                     )
                 )
             );

@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template, request
 app = Flask(__name__)
 
 @app.route('/')
@@ -23,8 +23,17 @@ def account():
    }
    return render_template('account.html', title='My Account', transactions=transactions, data=data)
 
-@app.route('/projects')
+@app.route('/projects', methods=['GET', 'POST'])
 def projects():
+
+   if request.method == 'POST':
+      creator_id = request.form['creator']
+      title = request.form['title']
+      description =  request.form['description']
+      score = 0
+      total_funding = 0
+      transactions = None
+
    projects = [
       {'name': 'Help Cats', 'score': 50},
       {'name': 'Help Dogs', 'score': 50}
