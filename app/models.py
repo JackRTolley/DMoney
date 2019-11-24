@@ -5,19 +5,20 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from app import db
 
-DB_URL = 'sqlite:///database.db'
+#DB_URL = 'sqlite:///database.db'
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
-app.config['SECRET_KEY'] = 'secret-key'
+#app = Flask(__name__)
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+#app.config['SECRET_KEY'] = 'secret-key'
 
 
 # Create our database model
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 Base = declarative_base()
-class User(Base):
+class User(db.Model):
     __tablename__="users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False,nullable=False)
@@ -28,7 +29,11 @@ class User(Base):
     projects = db.relationship('Project',backref='users',lazy=True)
     transactions = db.relationship('Transaction',backref='users',lazy=True)
 
-class Project(Base):
+
+    def __repr__(self):
+        return '<User {}>'.format(self.display_name)
+
+class Project(db.Model):
     __tablename__ = "projects"
     id = db.Column(db.Integer, primary_key=True)
     creator_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
@@ -38,13 +43,21 @@ class Project(Base):
     total_funding = db.Column(db.Float, unique=False)
     transactions = db.relationship('Transaction',backref='projects',lazy=True)
 
-class Transaction(Base):
+
+    def __repr__(self):
+        return '<Title {}>'.format(self.title)
+
+class Transaction(db.Model):
     __tablename__="transactions"
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Float, unique=False)
     #rate = db.Column(db.Float)
     user_key = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
     project_key = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable = False)
+
+
+    def __repr__(self):
+        return '<Transaction {}>'.format(self.value)
 
 def create_database_and_session(Base):
 
@@ -58,14 +71,14 @@ def create_database_and_session(Base):
 def populate_db(session):
 
     user_1 = User(id=1, )
-    
+
 def count():
     print("Total number of projects is", Project.query.count())
 
 def colunm_names():
     print()
 
-@app.cli.command('resetdb')
+#@app.cli.command('resetdb')
 def resetdb_command():
     """Destroys and creates the database + tables."""
 
@@ -81,7 +94,7 @@ def resetdb_command():
     db.create_all()
     print('Shiny!')
 
-@app.cli.command('add_sample_data')
+#@app.cli.command('add_sample_data')
 def add_data():
     engine = create_engine(DB_URL, echo=True)
     Session = sessionmaker(bind=engine)
@@ -112,15 +125,15 @@ def get_projects_by_score():
     print(list)
 
 if __name__ == "__main__":
-    
+
     session = create_database_and_session(Base)
 
-    
 
-    
+
+
     '''
     print("Print")
-    
+
     engine = create_engine(DB_URL, echo=True)
     #resetdb_command()
     Session = sessionmaker(bind=engine)
@@ -144,5 +157,3 @@ if __name__ == "__main__":
     project4 = Project(id = 4, title="Durham Litter Picking", score=0, total_funding=100)
     project5 = Project(id = 5, title="Park Management", score=6, total_funding=100)
     '''
-
-    

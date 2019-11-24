@@ -1,9 +1,4 @@
 <html>
-  <div>
-  DMoney:
-  <a href="/index">Home</a>
-  <a href="/project">Project Creation</a>
-  </div>
     <head>
       {% if title %}
       <title>{{ title }} - Microblog</title>
@@ -12,9 +7,22 @@
       {% endif %}
     </head>
     <body>
-        <div>Microblog: <a href="/index">Home</a></div>
+      <div>
+        DMoney:
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('projects') }}">Project Creation</a>
+        </div<
         <hr>
-        {% block content %}{% endblock %}
+        {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
     </body>
 
 </html>
