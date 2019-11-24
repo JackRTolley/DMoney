@@ -76,8 +76,33 @@
             </div>
             
             <ul class="list-group list-group-flush" style="padding: 10px 0px 0px">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <b>Project Name</b>
+                        </div>
+                        <div class="col-md-8">
+                            <b>Description</b>
+                        </div>
+                        <div class="col-md-2">
+                            <b>Time Stamp</b>
+                        </div>
+                    </div> 
+                </li>
                 {% for project in projects%}
-                <li class="list-group-item">{{project.name}}</li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-2">
+                        {{project.name}}
+                    </div>
+                    <div class="col-md-8">
+                        {{project.description}}
+                    </div>
+                    <div class="col-md-2">
+                        {{project.name}}
+                    </div>
+                  </div>  
+                </li>
                 {% endfor%}
             </ul>
         </main>
