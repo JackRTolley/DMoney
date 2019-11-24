@@ -45,7 +45,7 @@ def project():
       {'name': 'Help Frogs', 'score': 50},
       {'name': 'Help Frongs', 'score': 50}
    ]
-   return render_template('projects.html', title='My Projects', projects=projects)
+   return render_template('investments.html', title='My Investments', projects=projects)
 
 if __name__ == '__main__':
     app.run(debug = True)
