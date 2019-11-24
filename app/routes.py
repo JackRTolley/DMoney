@@ -1,5 +1,5 @@
 from flask import Flask,render_template, request
-from app.models import get_projects_by_score
+from app.models import get_projects_by_score, Project
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from app import app, db
@@ -25,17 +25,16 @@ def account():
 
 @app.route('/projects', methods=['GET', 'POST'])
 def projects():
-<<<<<<< HEAD
-=======
 
    if request.method == "POST":
-      return request.form['title']
+      title = request.form['title']
+      print(title)
+      description = request.form['description']
+      project = Project(creator_id = 1, title=title, description=description, score=0, total_funding=0)
+      db.session.add(project)
+      db.session.commit()
+      #return request.form['title']
 
-   projects = [
-      {'name': 'Help Cats', 'score': 50},
-      {'name': 'Help Dogs', 'score': 50}
-   ]
->>>>>>> 1eb61bc64176e329017ef6d2a213306da770261b
    projects = get_projects_by_score()
    return render_template('projects.html', title='My Projects', projects=projects)
 
