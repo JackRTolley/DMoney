@@ -6,6 +6,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from app import db
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 #DB_URL = 'sqlite:///database.db'
 
@@ -70,10 +72,10 @@ def create_database_and_session(Base):
 
 def populate_db(session):
 
-<<<<<<< HEAD
+
     user_1 = User(id=1, )
 
-=======
+
     user_1 = User(id=1, name="Mr. Jack", display_name="Mr. Jack",   email="na1", location="Durham", credit=100)
     user_2 = User(id=2, name="Mr. James", display_name="Mr. James", email="na2", location="Durham", credit=100)
     user_3 = User(id=3, name="Ms. Laura", display_name="Ms. Laura", email="na3", location="Durham", credit=100)
@@ -88,7 +90,7 @@ def populate_db(session):
     session.add(project_1)
 
     session.commit()
->>>>>>> 0fbb0c76261803965cfa86586dcebb30ac97d86e
+
 def count():
     print("Total number of projects is", Project.query.count())
 
@@ -127,7 +129,7 @@ def add_data():
     session.commit()
 
 def get_projects_by_score():
-    engine = create_engine(DB_URL, echo=True)
+    engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), echo=True)
     Session = sessionmaker(bind=engine)
     session = Session()
     ordered_list = session.query(Project).order_by(Project.score)
@@ -139,17 +141,15 @@ def get_projects_by_score():
         creator = project.creator_id
         dict = {'id':id, 'name':name, 'score':score, creator:'creator'}
         list.append(dict)
-    print(list)
+    return(list)
 
 if __name__ == "__main__":
 
     session = create_database_and_session(Base)
-<<<<<<< HEAD
 
-=======
     populate_db(session)
-    
->>>>>>> 0fbb0c76261803965cfa86586dcebb30ac97d86e
+
+
 
 
 
