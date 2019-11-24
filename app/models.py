@@ -28,7 +28,6 @@ class User(db.Model):
     display_name = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     location = db.Column(db.String(255),unique=False, nullable=False)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     credit = db.Column(db.Float, unique=False)
     projects = db.relationship('Project',backref='users',lazy=True)
     transactions = db.relationship('Transaction',backref='users',lazy=True)
@@ -42,7 +41,8 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     creator_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable = False)
     title = db.Column(db.String(120), unique=True)
-    description = db.Column(db.String(1000), unique = True)
+    description = db.Column(db.String(1000), unique=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     score = db.Column(db.Integer)
     total_funding = db.Column(db.Float, unique=False)
     transactions = db.relationship('Transaction',backref='projects',lazy=True)
@@ -139,7 +139,8 @@ def get_projects_by_score():
         score = project.score
         creator = project.creator_id
         descrit = project.description
-        dict = {'id':id, 'name':name, 'score':score, 'creator':creator, 'description': descrit}
+        time = str(project.timestamp)[0:10]
+        dict = {'id':id, 'name':name, 'score':score, 'creator':creator, 'description': descrit, 'time':time}
         list.append(dict)
     return(list)
 

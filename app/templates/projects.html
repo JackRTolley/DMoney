@@ -8,6 +8,30 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/5923e01dd0.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="static/css/base.css">
+    <style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.desc {
+  padding: 15px;
+  text-align: center;
+}
+</style>
 </head>
   <body>
 
@@ -74,17 +98,23 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
-            
-            <ul class="list-group list-group-flush" style="padding: 10px 0px 0px">
+
+          <ul class="list-group list-group-flush" style="padding: 10px 0px 0px">
                 {% for project in projects%}
-                <li class="list-group-item">{{project.name}}</li>
+              <!--<li class="list-group-item">{{project.name}}</li>-->
+                <div class="dropdown">
+              <li class="list-group-item">{{project.name}}&emsp;&emsp; Created on: {{project.time}}</li>
+                  <div class="dropdown-content">
+                    <div class="desc" >{{project.description}}</div></div>
+                  </div>
+
                 {% endfor%}
-            </ul>
+           </ul>
         </main>
 
       </div>
     </div>
-   
+
 
     <!-- dependencies scripts -->
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
