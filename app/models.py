@@ -70,8 +70,25 @@ def create_database_and_session(Base):
 
 def populate_db(session):
 
+<<<<<<< HEAD
     user_1 = User(id=1, )
 
+=======
+    user_1 = User(id=1, name="Mr. Jack", display_name="Mr. Jack",   email="na1", location="Durham", credit=100)
+    user_2 = User(id=2, name="Mr. James", display_name="Mr. James", email="na2", location="Durham", credit=100)
+    user_3 = User(id=3, name="Ms. Laura", display_name="Ms. Laura", email="na3", location="Durham", credit=100)
+
+    project_1 = Project(id=1, creator_id=1, title="Help Save our Cats", description="The cats are in trouble, please save them.", score=5,
+    total_funding=20)
+
+    session.add(user_1)
+    session.add(user_2)
+    session.add(user_3)
+
+    session.add(project_1)
+
+    session.commit()
+>>>>>>> 0fbb0c76261803965cfa86586dcebb30ac97d86e
 def count():
     print("Total number of projects is", Project.query.count())
 
@@ -127,7 +144,12 @@ def get_projects_by_score():
 if __name__ == "__main__":
 
     session = create_database_and_session(Base)
+<<<<<<< HEAD
 
+=======
+    populate_db(session)
+    
+>>>>>>> 0fbb0c76261803965cfa86586dcebb30ac97d86e
 
 
 
