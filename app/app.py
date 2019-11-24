@@ -1,5 +1,14 @@
 from flask import Flask,render_template
+from config import Config
+from models import *
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+
 app = Flask(__name__)
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 @app.route('/')
 @app.route('/index')
@@ -29,6 +38,7 @@ def projects():
       {'name': 'Help Cats', 'score': 50},
       {'name': 'Help Dogs', 'score': 50}
    ]
+   projects = get_projects_by_score()
    return render_template('projects.html', title='My Projects', projects=projects)
 
 @app.route('/investments')
