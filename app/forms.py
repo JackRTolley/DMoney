@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
+from app.models import Project
 
 '''class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -11,5 +12,10 @@ from wtforms.validators import DataRequired
 
 class ProjectForm(FlaskForm):
     name = StringField('Project Title', validators=[DataRequired()])
-    description = StringField('Description', validators=[DataRequired])
+    description = StringField('Description', validators=[DataRequired()])
     submit = SubmitField('Enter Project')
+
+    def validate_name(self, name):
+        title = Project.query.filter_by(title=name.data).first()
+        if title is not None:
+            raise ValidationError('Please use a different project title!')
